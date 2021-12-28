@@ -1,3 +1,5 @@
+#[allow(dead_code)]
+
 fn add_bits(arr: Vec<i32>, next: Vec<char>) -> Vec<i32> {
     (0..arr.len())
         .map(|i| {

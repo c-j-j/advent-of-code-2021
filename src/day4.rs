@@ -1,3 +1,5 @@
+#[allow(dead_code)]
+
 type Line = Vec<u32>;
 type Board = Vec<u32>;
 
@@ -62,14 +64,8 @@ fn get_cols(board: &Board) -> Vec<Line> {
     cols
 }
 
-fn find_winning_board<'a>(drawn_numbers: &Vec<u32>, boards: &'a Vec<Board>) -> Option<&'a Board> {
-    boards
-        .iter()
-        .find(|board| get_winning_line(drawn_numbers, board).is_some())
-}
-
 pub fn part1(input: String) -> u32 {
-    let (numbers_to_draw, mut boards) = parse_input(input);
+    let (numbers_to_draw, boards) = parse_input(input);
 
     let mut drawn: Vec<u32> = vec![];
 
@@ -102,7 +98,7 @@ pub fn part1(input: String) -> u32 {
 }
 
 pub fn part2(input: String) -> u32 {
-    let (numbers_to_draw, mut boards) = parse_input(input);
+    let (numbers_to_draw, boards) = parse_input(input);
 
     let mut drawn: Vec<u32> = vec![];
     let mut won_boards: Vec<bool> = vec![false; boards.len()];

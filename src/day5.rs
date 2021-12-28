@@ -1,4 +1,4 @@
-use std::cmp::{max, min};
+#[allow(dead_code)]
 use std::collections::HashMap;
 
 #[derive(Debug, PartialEq)]
@@ -7,16 +7,6 @@ struct Line {
     x1: i32,
     y0: i32,
     y1: i32,
-}
-
-struct Point {
-    x: i32,
-    y: i32,
-}
-struct Intersection {
-    x: i32,
-    y: i32,
-    number_crossings: i32,
 }
 
 fn parse_line(line: &str) -> Line {
@@ -83,7 +73,7 @@ pub fn part1(input: String) -> i32 {
         }
     }
 
-    let num_intersections_gte_2 = intersections.iter().filter(|(k, v)| **v >= 2).count();
+    let num_intersections_gte_2 = intersections.iter().filter(|(_k, v)| **v >= 2).count();
     num_intersections_gte_2 as i32
 }
 
@@ -109,7 +99,7 @@ pub fn part2(input: String) -> i32 {
         }
     }
 
-    let num_intersections_gte_2 = intersections.iter().filter(|(k, v)| **v >= 2).count();
+    let num_intersections_gte_2 = intersections.iter().filter(|(_k, v)| **v >= 2).count();
     num_intersections_gte_2 as i32
 }
 
@@ -129,4 +119,5 @@ fn testing_part1() {
     );
     let answer = part1(input);
     assert_eq!(answer, 5);
+    part2(String::from(""));
 }
