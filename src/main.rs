@@ -10,9 +10,10 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 
 fn main() {
-    let input = fs::read_to_string("./src/day8-input").unwrap();
-    let answer = day8::part2(input);
+    let input = fs::read_to_string("./src/day9-input").unwrap();
+    let answer = day9::part2(input);
     println!("Answer: {}", answer);
 }
