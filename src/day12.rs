@@ -35,24 +35,20 @@ fn get_neighbours(connections: &Vec<(Cave, Cave)>, current: &String) -> Vec<Cave
         .collect()
 }
 
-fn dfs(
-    connections: &Vec<(Cave, Cave)>,
-    current: &String,
-    current_path: &mut Vec<String>,
-    paths: &mut Vec<Vec<String>>,
-) {
+fn dfs(connections: &Vec<(Cave, Cave)>, current: &String, current_path: &mut Vec<String>) -> i32 {
     if current == "end" {
-        paths.push(current_path.clone());
-        return;
+        return 1;
     }
 
+    let mut sum = 0;
     for neighbour in get_neighbours(&connections, current).iter() {
         if !current_path.contains(&neighbour.name) || !neighbour.small {
             current_path.push(neighbour.name.clone());
-            dfs(connections, &neighbour.name, current_path, paths);
+            sum += dfs(connections, &neighbour.name, current_path);
             current_path.pop();
         }
     }
+    sum
 }
 
 fn determine_if_two_small_caves_exist(path: &Vec<Cave>) -> bool {
@@ -63,50 +59,37 @@ fn determine_if_two_small_caves_exist(path: &Vec<Cave>) -> bool {
     sums.into_iter().find(|(k, v)| *v > 1 && k.small).is_some()
 }
 
-fn dfs2(
-    connections: &Vec<(Cave, Cave)>,
-    current: &String,
-    current_path: &mut Vec<Cave>,
-    paths: &mut Vec<Vec<Cave>>,
-) {
+fn dfs2(connections: &Vec<(Cave, Cave)>, current: &String, current_path: &mut Vec<Cave>) -> i32 {
     if current == "end" {
-        paths.push(current_path.clone());
-        return;
+        return 1;
     }
-
+    let mut sum = 0;
     for neighbour in get_neighbours(&connections, current).iter() {
         let has_two_small_caves = determine_if_two_small_caves_exist(current_path);
         if neighbour.name != "start"
             && (!neighbour.small || !has_two_small_caves || !current_path.contains(&neighbour))
         {
             current_path.push(neighbour.clone());
-            dfs2(connections, &neighbour.name, current_path, paths);
+            sum += dfs2(connections, &neighbour.name, current_path);
             current_path.pop();
         }
     }
+    sum
 }
 
-pub fn part1(input: String) -> usize {
+pub fn part1(input: String) -> i32 {
     let connections: Vec<(Cave, Cave)> = input.lines().map(|l| parse_line(l)).collect();
 
     let node = String::from("start");
 
-    let mut paths = vec![];
-    dfs(
-        &connections,
-        &node,
-        &mut vec![String::from("start")],
-        &mut paths,
-    );
-    paths.len()
+    dfs(&connections, &node, &mut vec![String::from("start")])
 }
 
-pub fn part2(input: String) -> usize {
+pub fn part2(input: String) -> i32 {
     let connections: Vec<(Cave, Cave)> = input.lines().map(|l| parse_line(l)).collect();
 
     let node = String::from("start");
 
-    let mut paths = vec![];
     dfs2(
         &connections,
         &node,
@@ -114,9 +97,7 @@ pub fn part2(input: String) -> usize {
             name: String::from("start"),
             small: true,
         }],
-        &mut paths,
-    );
-    paths.len()
+    )
 }
 
 #[test]
