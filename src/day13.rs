@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 #[derive(Debug)]
 struct Point {
     x: usize,
@@ -115,7 +113,7 @@ pub fn part1(input: String, num_folds: Option<i32>) -> i32 {
 }
 
 fn reflect_on_axis(line: usize, y: usize) -> usize {
-    (line - (y - line))
+    line - (y - line)
 }
 
 #[test]
